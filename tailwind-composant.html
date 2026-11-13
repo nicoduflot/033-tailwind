@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tailwind : Modules, @apply et Extraction</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style type="text/tailwindcss">
+        /* Démonstration de @apply */
+        .btn-primary {
+            @apply bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200;
+        }
+
+        .card-demo {
+            @apply bg-white rounded-lg shadow-lg p-6 border border-gray-200;
+        }
+    </style>
+    <style>
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        .code-block .comment {
+            color: #64748b;
+        }
+
+        .code-block .keyword {
+            color: #38bdf8;
+        }
+
+        .code-block .string {
+            color: #a5f3fc;
+        }
+
+        .code-block .class {
+            color: #fbbf24;
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-slate-50 to-slate-100 min-h-screen p-8">
+    <div class="max-w-6xl mx-auto">
+        <!-- En-tête -->
+        <header class="text-center mb-12">
+            <h1 class="text-5xl font-bold text-gray-900 mb-4">
+                Tailwind CSS Avancé
+            </h1>
+            <p class="text-xl text-gray-600">
+                Modules, @apply et Extraction de composants
+            </p>
+        </header>
+
+        <!-- 1. Création de modules -->
+        <section class="bg-white rounded-xl shadow-xl p-8 mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 border-b-4 border-blue-600 pb-3">
+                📦 1. Création de Modules
+            </h2>
+
+            <div class="mb-6">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Qu'est-ce qu'un module Tailwind ?</h3>
+                <p class="text-gray-700 mb-4 leading-relaxed">
+                    Un module est un fichier CSS séparé qui contient des composants réutilisables.
+                    Il permet d'organiser votre code et de créer une bibliothèque de composants personnalisés.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">📁 Structure de fichiers recommandée</h3>
+                <div class="code-block mb-4">
+                    <span class="comment">// Structure du projet</span>
+                    <pre>
+src/
+├── css/
+│   ├── main.css          <span class="comment">// Fichier principal</span>
+│   └── components/       <span class="comment">// Dossier des modules</span>
+│       ├── buttons.css
+│       ├── cards.css
+│       └── forms.css
+└── tailwind.config.js
+</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">📝 Exemple : main.css</h3>
+                <div class="code-block mb-4">
+                    <pre>
+<span class="keyword">@tailwind</span> base;
+<span class="keyword">@tailwind</span> components;
+<span class="keyword">@tailwind</span> utilities;
+
+<span class="comment">/* Importer vos modules */</span>
+<span class="keyword">@import</span> <span class="string">'./components/buttons.css'</span>;
+<span class="keyword">@import</span> <span class="string">'./components/cards.css'</span>;
+<span class="keyword">@import</span> <span class="string">'./components/forms.css'</span>;
+</pre>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">📝 Exemple : components/buttons.css</h3>
+                <div class="code-block">
+                    <pre>
+<span class="comment">/* Module dédié aux boutons */</span>
+<span class="keyword">@layer</span> components {
+  <span class="class">.btn</span> {
+    <span class="keyword">@apply</span> px-4 py-2 rounded font-semibold transition duration-200;
+  }
+
+  <span class="class">.btn-primary</span> {
+    <span class="keyword">@apply</span> btn bg-blue-600 text-white hover:bg-blue-700;
+  }
+
+  <span class="class">.btn-secondary</span> {
+    <span class="keyword">@apply</span> btn bg-gray-600 text-white hover:bg-gray-700;
+  }
+
+  <span class="class">.btn-outline</span> {
+    <span class="keyword">@apply</span> btn border-2 border-blue-600 text-blue-600 hover:bg-blue-50;
+  }
+}
+</pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. L'outil @apply -->
+        <section class="bg-white rounded-xl shadow-xl p-8 mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 border-b-4 border-green-600 pb-3">
+                🎨 2. L'outil @apply
+            </h2>
+
+            <div class="mb-6">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Qu'est-ce que @apply ?</h3>
+                <p class="text-gray-700 mb-4 leading-relaxed">
+                    <code class="bg-gray-100 px-2 py-1 rounded text-sm">@apply</code> permet d'extraire des classes
+                    utilitaires Tailwind répétitives dans des classes CSS personnalisées.
+                    C'est comme créer des "raccourcis" pour des combinaisons de classes fréquemment utilisées.
+                </p>
+            </div>
+
+            <div class="mb-6">
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">❌ Sans @apply (répétitif)</h3>
+                <div class="code-block mb-4">
+                    <pre>
+<span class="comment">&lt;!-- Répété partout dans le HTML --&gt;</span>
+&lt;<span class="keyword">button</span> <span class="class">class</span>=<span class="string">"bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 shadow-md"</span>&gt;
+  Cliquez-moi
+&lt;/<span class="keyword">button</span>&gt;
+
+&lt;<span class="keyword">button</span> <span class="class">class</span>=<span class="string">"bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 shadow-md"</span>&gt;
+  Encore moi
+&lt;/<span class="keyword">button</span>&gt;
+</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">✅ Avec @apply (propre)</h3>
+                <div class="code-block mb-4">
+                    <pre>
+<span class="comment">/* Dans votre CSS */</span>
+<span class="keyword">@layer</span> components {
+  <span class="class">.btn-primary</span> {
+    <span class="keyword">@apply</span> bg-blue-600 hover:bg-blue-700 text-white 
+           font-semibold py-2 px-4 rounded-lg 
+           transition duration-200 shadow-md;
+  }
+}
+</pre>
+                </div>
+                <div class="code-block">
+                    <pre>
+<span class="comment">&lt;!-- Dans votre HTML (beaucoup plus propre) --&gt;</span>
+&lt;<span class="keyword">button</span> <span class="class">class</span>=<span class="string">"btn-primary"</span>&gt;Cliquez-moi&lt;/<span class="keyword">button</span>&gt;
+&lt;<span class="keyword">button</span> <span class="class">class</span>=<span class="string">"btn-primary"</span>&gt;Encore moi&lt;/<span class="keyword">button</span>&gt;
+</pre>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">🎯 Démonstration Live</h3>
+                <div class="flex gap-4 flex-wrap">
+                    <button class="btn-primary">
+                        Bouton avec @apply
+                    </button>
+                    <button
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200">
+                        Bouton sans @apply
+                    </button>
+                </div>
+                <p class="text-sm text-gray-600 mt-3">
+                    ☝️ Les deux boutons ont le même style, mais le premier utilise une classe créée avec @apply
+                </p>
+            </div>
+
+            <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-6">
+                <h4 class="font-bold text-yellow-800 mb-2">⚠️ Bonnes pratiques avec @apply</h4>
+                <ul class="list-disc list-inside text-yellow-800 space-y-1">
+                    <li>Utilisez <code>@layer components</code> pour garder la cascade CSS correcte</li>
+                    <li>N'abusez pas de @apply : gardez l'esprit utility-first de Tailwind</li>
+                    <li>Réservez @apply pour les composants vraiment réutilisés</li>
+                    <li>Évitez @apply pour des variations uniques</li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">📚 Exemple complet : Card component</h3>
+                <div class="code-block mb-4">
+                    <pre>
+<span class="comment">/* components/cards.css */</span>
+<span class="keyword">@layer</span> components {
+    <span class="class">.card</span> {
+        <span class="keyword">@apply</span> bg-white rounded-lg shadow-lg p-6
+        border border-gray-200
+        hover:shadow-xl transition-shadow duration-300;
+    }
+
+    <span class="class">.card-title</span> {
+    <span class="keyword">@apply</span> text-2xl font-bold text-gray-900 mb-3;
+    }
+
+    <span class="class">.card-text</span> {
+    <span class="keyword">@apply</span> text-gray-600 leading-relaxed mb-4;
+    }
+
+    <span class="class">.card-footer</span> {
+    <span class="keyword">@apply</span> border-t border-gray-200 pt-4 mt-4
+    flex justify-between items-center;
+    }
+}
+</pre>
+                </div>
+
+                <div class="card-demo">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Exemple de Card</h3>
+                    <p class="text-gray-600 leading-relaxed mb-4">
+                        Cette card utilise des classes créées avec @apply.
+                        Le code HTML reste propre et lisible !
+                    </p>
+                    <div class="border-t border-gray-200 pt-4 mt-4 flex justify-between items-center">
+                        <span class="text-sm text-gray-500">Footer</span>
+                        <button class="btn-primary text-sm">Action</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. L'extraction sous Tailwind -->
+        <section class="bg-white rounded-xl shadow-xl p-8 mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 border-b-4 border-purple-600 pb-3">
+                🔄 3. L'Extraction de Composants
+            </h2>
+
+            <div class="mb-6">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Qu'est-ce que l'extraction ?</h3>
+                <p class="text-gray-700 mb-4 leading-relaxed">
+                    L'extraction consiste à identifier des patterns répétitifs dans votre HTML et les
+                    transformer en composants réutilisables. Il existe 3 niveaux d'extraction.
+                </p>
+            </div>
+
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">🎯 Niveau 1 : Extraction en composant HTML/Template
+                </h3>
+                <p class="text-gray-700 mb-3">
+                    La méthode la plus simple : créer des composants/partials dans votre framework (React, Vue, etc.)
+                </p>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <h4 class="font-semibold text-gray-700 mb-2">❌ Avant (répétitif)</h4>
+                        <div class="code-block text-xs">
+<pre>
+<span class="comment">&lt;!-- Page 1 --&gt;</span>
+&lt;<span class="keyword">div</span> <span class="class">class</span>=<span
+    class="string">"bg-white rounded-lg shadow p-6"</span>&gt;
+&lt;<span class="keyword">h3</span>&gt;Titre&lt;/<span class="keyword">h3</span>&gt;
+&lt;<span class="keyword">p</span>&gt;Contenu&lt;/<span class="keyword">p</span>&gt;
+&lt;/<span class="keyword">div</span>&gt;
+
+<span class="comment">&lt;!-- Page 2 --&gt;</span>
+&lt;<span class="keyword">div</span> <span class="class">class</span>=<span
+    class="string">"bg-white rounded-lg shadow p-6"</span>&gt;
+&lt;<span class="keyword">h3</span>&gt;Autre titre&lt;/<span class="keyword">h3</span>&gt;
+&lt;<span class="keyword">p</span>&gt;Autre contenu&lt;/<span class="keyword">p</span>&gt;
+&lt;/<span class="keyword">div</span>&gt;
+</pre>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="font-semibold text-gray-700 mb-2">✅ Après (composant)</h4>
+                        <div class="code-block text-xs">
+                            <pre>
+<span class="comment">&lt;!-- Card.html --&gt;</span>
+&lt;<span class="keyword">div</span> <span class="class">class</span>=<span
+    class="string">"bg-white rounded-lg shadow p-6"</span>&gt;
+&lt;<span class="keyword">h3</span>&gt;{{ titre }}&lt;/<span class="keyword">h3</span>&gt;
+&lt;<span class="keyword">p</span>&gt;{{ contenu }}&lt;/<span class="keyword">p</span>&gt;
+&lt;/<span class="keyword">div</span>&gt;
+
+<span class="comment">&lt;!-- Utilisation --&gt;</span>
+&lt;<span class="keyword">Card</span> <span class="class">titre</span>=<span
+    class="string">"Titre"</span> <span class="class">contenu</span>=<span
+    class="string">"Contenu"</span> /&gt;
+&lt;<span class="keyword">Card</span> <span class="class">titre</span>=<span
+    class="string">"Autre"</span> <span class="class">contenu</span>=<span
+    class="string">"Autre"</span> /&gt;
+    </pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">🎯 Niveau 2 : Extraction avec @apply</h3>
+                <p class="text-gray-700 mb-3">
+                    Quand les classes sont vraiment répétées partout et qu'un composant ne suffit pas
+                </p>
+
+                <div class="code-block mb-4">
+<pre>
+<span class="comment">/* Dans votre CSS */</span>
+<span class="keyword">@layer</span> components {
+    <span class="comment">/* Extraction d'un pattern commun */</span>
+    <span class="class">.section-container</span> {
+    <span class="keyword">@apply</span> max-w-7xl mx-auto px-4 py-12 md:py-16 lg:py-20;
+    }
+
+    <span class="class">.section-title</span> {
+    <span class="keyword">@apply</span> text-3xl md:text-4xl lg:text-5xl font-bold
+    text-gray-900 mb-6 text-center;
+    }
+
+    <span class="class">.section-description</span> {
+    <span class="keyword">@apply</span> text-lg text-gray-600 text-center
+    max-w-3xl mx-auto mb-12;
+    }
+}
+</pre>
+                </div>
+
+                <div class="code-block">
+                    <pre>
+<span class="comment">&lt;!-- Utilisation (beaucoup plus propre) --&gt;</span>
+&lt;<span class="keyword">section</span> <span class="class">class</span>=<span
+    class="string">"section-container"</span>&gt;
+&lt;<span class="keyword">h2</span> <span class="class">class</span>=<span
+    class="string">"section-title"</span>&gt;Nos Services&lt;/<span class="keyword">h2</span>&gt;
+&lt;<span class="keyword">p</span> <span class="class">class</span>=<span
+    class="string">"section-description"</span>&gt;
+Description de nos services...
+&lt;/<span class="keyword">p</span>&gt;
+&lt;/<span class="keyword">section</span>&gt;
+</pre>
+                </div>
+            </div>
+
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">🎯 Niveau 3 : Extraction avec variantes</h3>
+                <p class="text-gray-700 mb-3">
+                    Créer un système de composants avec variantes et modificateurs
+                </p>
+
+                <div class="code-block mb-4">
+                    <pre>
+<span class="comment">/* Système de boutons avec variantes */</span>
+<span class="keyword">@layer</span> components {
+    <span class="comment">/* Classe de base */</span>
+    <span class="class">.btn</span> {
+        <span class="keyword">@apply</span> inline-flex items-center justify-center
+        px-4 py-2 rounded-lg font-semibold
+        transition duration-200 cursor-pointer
+        disabled:opacity-50 disabled:cursor-not-allowed;
+    }
+
+    <span class="comment">/* Variantes de couleur */</span>
+    <span class="class">.btn-primary</span> {
+    <span class="keyword">@apply</span> btn bg-blue-600 text-white
+    hover:bg-blue-700 active:bg-blue-800;
+    }
+
+    <span class="class">.btn-secondary</span> {
+    <span class="keyword">@apply</span> btn bg-gray-600 text-white
+    hover:bg-gray-700 active:bg-gray-800;
+    }
+
+    <span class="class">.btn-danger</span> {
+    <span class="keyword">@apply</span> btn bg-red-600 text-white
+    hover:bg-red-700 active:bg-red-800;
+    }
+
+    <span class="comment">/* Variantes de taille */</span>
+    <span class="class">.btn-sm</span> {
+    <span class="keyword">@apply</span> px-3 py-1 text-sm;
+    }
+
+    <span class="class">.btn-lg</span> {
+    <span class="keyword">@apply</span> px-6 py-3 text-lg;
+    }
+
+    <span class="comment">/* Variantes de style */</span>
+    <span class="class">.btn-outline</span> {
+    <span class="keyword">@apply</span> btn border-2 bg-transparent;
+    }
+
+    <span class="class">.btn-outline.btn-primary</span> {
+    <span class="keyword">@apply</span> border-blue-600 text-blue-600
+    hover:bg-blue-50;
+    }
+}
+</pre>
+                </div>
+
+                <div class="code-block mb-4">
+                    <pre>
+<span class="comment">&lt;!-- Utilisation avec combinaison de classes --&gt;</span>
+&lt;<span class="keyword">button</span> <span class="class">class</span>=<span
+    class="string">"btn-primary"</span>&gt;Normal&lt;/<span class="keyword">button</span>&gt;
+&lt;<span class="keyword">button</span> <span class="class">class</span>=<span
+    class="string">"btn-primary btn-sm"</span>&gt;Petit&lt;/<span class="keyword">button</span>&gt;
+&lt;<span class="keyword">button</span> <span class="class">class</span>=<span
+    class="string">"btn-primary btn-lg"</span>&gt;Grand&lt;/<span class="keyword">button</span>&gt;
+&lt;<span class="keyword">button</span> <span class="class">class</span>=<span
+    class="string">"btn-outline btn-primary"</span>&gt;Outline&lt;/<span
+    class="keyword">button</span>&gt;
+</pre>
+                </div>
+
+                <div class="flex gap-3 flex-wrap items-center">
+                    <button class="btn-primary">Normal</button>
+                    <button class="btn-primary text-sm px-3 py-1">Petit</button>
+                    <button class="btn-primary text-lg px-6 py-3">Grand</button>
+                    <button
+                        class="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 inline-flex items-center justify-center px-4 py-2 rounded-lg font-semibold transition duration-200">Outline</button>
+                </div>
+            </div>
+
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4">
+                <h4 class="font-bold text-blue-800 mb-2">💡 Quand extraire ?</h4>
+                <ul class="list-disc list-inside text-blue-800 space-y-2">
+                    <li><strong>Pattern répété 3+ fois</strong> → Envisagez l'extraction</li>
+                    <li><strong>Composant d'UI standard</strong> (bouton, card) → @apply ou composant</li>
+                    <li><strong>Variation unique</strong> → Gardez les classes inline</li>
+                    <li><strong>Système complexe</strong> (design system) → Extraction avancée avec variantes</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Comparaison -->
+        <section class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl shadow-xl p-8 text-white">
+            <h2 class="text-3xl font-bold mb-6">📊 Comparaison des approches</h2>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white/10 backdrop-blur rounded-lg p-6">
+                    <h3 class="text-xl font-bold mb-3">Classes Inline</h3>
+                    <div class="space-y-2 text-sm">
+                        <p><strong>✅ Avantages :</strong></p>
+                        <ul class="list-disc list-inside space-y-1 text-white/90">
+                            <li>Très flexible</li>
+                            <li>Pas de CSS séparé</li>
+                            <li>Facile à modifier</li>
+                        </ul>
+                        <p class="mt-3"><strong>❌ Inconvénients :</strong></p>
+                        <ul class="list-disc list-inside space-y-1 text-white/90">
+                            <li>Répétitif</li>
+                            <li>HTML verbeux</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur rounded-lg p-6">
+                    <h3 class="text-xl font-bold mb-3">@apply</h3>
+                    <div class="space-y-2 text-sm">
+                        <p><strong>✅ Avantages :</strong></p>
+                        <ul class="list-disc list-inside space-y-1 text-white/90">
+                            <li>HTML propre</li>
+                            <li>Réutilisable</li>
+                            <li>Maintenable</li>
+                        </ul>
+                        <p class="mt-3"><strong>❌ Inconvénients :</strong></p>
+                        <ul class="list-disc list-inside space-y-1 text-white/90">
+                            <li>CSS séparé</li>
+                            <li>Moins flexible</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur rounded-lg p-6">
+                    <h3 class="text-xl font-bold mb-3">Composants</h3>
+                    <div class="space-y-2 text-sm">
+                        <p><strong>✅ Avantages :</strong></p>
+                        <ul class="list-disc list-inside space-y-1 text-white/90">
+                            <li>Très réutilisable</li>
+                            <li>Logique incluse</li>
+                            <li>Props dynamiques</li>
+                        </ul>
+                        <p class="mt-3"><strong>❌ Inconvénients :</strong></p>
+                        <ul class="list-disc list-inside space-y-1 text-white/90">
+                            <li>Plus complexe</li>
+                            <li>Framework requis</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercice pratique -->
+        <section class="bg-white rounded-xl shadow-xl p-8 mt-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 border-b-4 border-orange-600 pb-3">
+                🎯 Exercice Pratique
+            </h2>
+
+            <div class="bg-orange-50 border-l-4 border-orange-500 p-6 mb-6">
+                <h3 class="text-xl font-bold text-orange-900 mb-3">Mission</h3>
+                <p class="text-orange-800 mb-4">
+                    Créez un système de notifications (alerts) avec 3 variantes : success, warning, error.
+                    Utilisez @apply pour créer des classes réutilisables.
+                </p>
+
+                <h4 class="font-bold text-orange-900 mb-2">Spécifications :</h4>
+                <ul class="list-disc list-inside text-orange-800 space-y-1">
+                    <li>Classe de base <code>.alert</code> avec padding, bordure arrondie, etc.</li>
+                    <li>Classe <code>.alert-success</code> (vert)</li>
+                    <li>Classe <code>.alert-warning</code> (orange)</li>
+                    <li>Classe <code>.alert-error</code> (rouge)</li>
+                    <li>Incluez une icône et un bouton de fermeture</li>
+                </ul>
+            </div>
+
+            <div class="code-block">
+                <pre>
+<span class="comment">/* Votre code ici */</span>
+<span class="keyword">@layer</span> components {
+<span class="class">.alert</span> {
+<span class="keyword">@apply</span> <span class="comment">/* À compléter */</span>;
+}
+
+<span class="class">.alert-success</span> {
+<span class="keyword">@apply</span> <span class="comment">/* À compléter */</span>;
+}
+
+<span class="comment">/* ... */</span>
+}
+</pre>
+            </div>
+        </section>
+    </div>
+</body>
+
+</html>

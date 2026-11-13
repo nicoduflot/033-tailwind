@@ -1,0 +1,57 @@
+@import "tailwindcss";
+@import url('./roboto.css');
+@import url('./bootstrap-icons.css');
+
+@theme{
+    --font-sans: 'Roboto';
+    --font-serif: Times;
+
+    /*
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    */
+    --font-mono: 'Courier New', Courier, monospace;
+}
+
+mark{
+    background-color: var(--color-pink-500);
+}
+
+code{
+    color: var(--color-pink-950);
+    font-weight: 700;
+}
+
+/* Styles pour la démonstration visuelle */
+        .demo-col {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-weight: 600;
+            border: 2px solid white;
+        }
+        
+        .demo-row {
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            background: #1e293b;
+            color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+        
+        .code-snippet {
+            background: #f1f5f9;
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #3b82f6;
+        }

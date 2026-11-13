@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./src/css/style.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
+</head>
+
+<body>
+    <header class="bg-gray-900 text-gray-50 py-3">
+        <div class="container px-2 flex flex-wrap justify-between items-center mx-auto">
+            <div class="text-3xl font-bold">Hello world!</div>
+            <div>Petite mise en application de Tailwind CSS</div>
+        </div>
+    </header>
+    <nav role="navigation" class="bg-gray-900 text-gray-50 py-2">
+        <div class="container px-2 mx-auto">
+            <div class="flex h-16 items-center justify-between">
+                <div class="flex items-center">
+                    <div class="hidden md:block">
+                        <div class="flex items-baseline space-x-4">
+                            <!-- Current: "bg-gray-950/50 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
+                            <a href="./index.html" aria-current="page"
+                                class="rounded-md bg-gray-950/50 px-3 py-2 text-sm font-medium text-white">Hello
+                                World</a>
+                            <a href="./composants.html"
+                                class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">Composants</a>
+                            <a href="#"
+                                class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">Projects</a>
+                            <a href="#"
+                                class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">Calendar</a>
+                            <a href="#"
+                                class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">Reports</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="-mr-2 flex md:hidden">
+                    <!-- Mobile menu button -->
+                    <button type="button" command="--toggle" commandfor="mobile-menu"
+                        class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-white/5 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500">
+                        <span class="absolute -inset-0.5"></span>
+                        <span class="sr-only">Open main menu</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon"
+                            aria-hidden="true" class="size-6 in-aria-expanded:hidden">
+                            <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon"
+                            aria-hidden="true" class="size-6 not-in-aria-expanded:hidden">
+                            <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <el-disclosure id="mobile-menu" hidden class="block md:hidden">
+            <div class="space-y-1 px-2 pt-2 pb-3 sm:px-3">
+                <!-- Current: "bg-gray-950/50 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
+                <a href="#" aria-current="page"
+                    class="block rounded-md bg-gray-950/50 px-3 py-2 text-base font-medium text-white">Dashboard</a>
+                <a href="#"
+                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">Team</a>
+                <a href="#"
+                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">Projects</a>
+                <a href="#"
+                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">Calendar</a>
+                <a href="#"
+                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">Reports</a>
+            </div>
+            <div class="border-t border-white/10 pt-4 pb-3">
+                <div class="flex items-center px-5">
+                    <div class="shrink-0">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                            alt="" class="size-10 rounded-full outline -outline-offset-1 outline-white/10" />
+                    </div>
+                    <div class="ml-3">
+                        <div class="text-base/5 font-medium text-white">Tom Cook</div>
+                        <div class="text-sm font-medium text-gray-400">tom@example.com</div>
+                    </div>
+                    <button type="button"
+                        class="relative ml-auto shrink-0 rounded-full p-1 text-gray-400 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500">
+                        <span class="absolute -inset-1.5"></span>
+                        <span class="sr-only">View notifications</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon"
+                            aria-hidden="true" class="size-6">
+                            <path
+                                d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="mt-3 space-y-1 px-2">
+                    <a href="#"
+                        class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-white/5 hover:text-white">Your
+                        profile</a>
+                    <a href="#"
+                        class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-white/5 hover:text-white">Settings</a>
+                    <a href="#"
+                        class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-white/5 hover:text-white">Sign
+                        out</a>
+                </div>
+            </div>
+        </el-disclosure>
+    </nav>
+    <main class="container px-2 mx-auto">
+        <header>
+            <h1 class="text-2xl font-bold">Modèles Grille Vs Colonnes</h1>
+        </header>
+        <aside>
+            <span class="text-2xl">Table des matières</span>
+        </aside>
+        <h2 class="text-2xl font-bold">Utiliser les colonnes</h2>
+        <section class="my-1 columns-1 lg:columns-2 xl:columns-3 gap-x-1">
+            <article class="mb-1 rounded-sm p-2 border border-gray-900 break-inside-avoid-column">
+                <h3 class="font-bold">La classe columns<i>-&lt;nombre&gt;</i></h3>
+                <p>
+                    En utilisant la classe <code>columns-x</code> (<i>où x est le nombre de colonnes désiré</i>), on va
+                    définir le nombre d'éléments dans l'odre des affichage d'écran, en commençant par l'affichage
+                    smartphone jusqu'aux et en remontant jusqu'aux écrans larges et plus.
+                </p>
+                <code>
+                    &lt;section class="my-1 <mark>columns-1 lg:columns-2 xl:columns-3</mark> gap-1"&gt;
+                </code>
+            </article>
+            <article class="mb-1 rounded-sm p-2 border border-gray-900 break-inside-avoid-column">
+                <h3 class="font-bold">La classe break<i>-&lt;options&gt;</i></h3>
+                <p>
+                    Demander des colonnes va, par défaut, "casser" les éléments pour qu'ils aient tous la même hauteur.
+                    Pour éviter cela, il faudra ajouter par exemple aux éléments à l'intérieur la classe
+                    <code>break-inside-avoid-column</code>
+                </p>
+                <code>
+                    &lt;article class="rounded-sm p-2 border border-gray-900 <mark>break-inside-avoid-column</mark>"&gt;
+                </code>
+            </article>
+            <article class="mb-1 rounded-sm p-2 border border-gray-900 break-inside-avoid-column">
+                <h3 class="font-bold">Régler le gap horizontal avec <code>gap<i>-x-&lt;nombre&gt;</i></code></h3>
+                <p>
+                    On applique la classe <code>gap-x<i>-&lt;nombre&gt;</i></code> à l'élément qui va contenir les
+                    éléments de la grille, selon la valeur ajoutée, on jouera sur l'espace horizontal entre les éléments
+                    à l'intérieur.
+                </p>
+                <code>
+                    &lt;section class="my-1 columns-1 lg:columns-2 xl:columns-3 <mark>gap-x-1</mark>"&gt;
+                </code>
+            </article>
+            <article class="mb-1 rounded-sm p-2 border border-gray-900 break-inside-avoid-column">
+                <h3 class="font-bold">Régler le gap vertical</h3>
+                <p>
+                    Avec le système <code>columns</code>, la classe <code>gap</code> ne contrôle que l'espacement
+                    horizontal entre les colonnes (l'équivalent de <code>column-gap</code> en CSS).
+                </p>
+                <p>
+                    Il faut pour cela régler ajouter la classe <code>gap-x-1</code> au conteneur et une classe de marge
+                    extérieure basse <code>mb-1</code> par exemple pour établir un gap vertical. Ajouter la classe
+                    <code>my-1</code> par exemple, ne donnera pas le résultat escompté.
+                </p>
+                <code>
+                    &lt;article class="<mark>mb-1</mark>rounded-sm p-2 border border-gray-900 break-inside-avoid-column"&gt;
+                </code>
+            </article>
+            <article class="mb-1 rounded-sm p-2 border border-gray-900 break-inside-avoid-column">
+                <h3 class="font-bold">pas de <code>span</code></h3>
+                <p>
+                    Le système de colonnes dans Tailwind CSS (<code>columns-*</code>) est basé sur la propriété CSS
+                    <code>columns</code>, qui est conçue pour créer des mises en page de type magazine/journal avec du
+                    contenu qui s'écoule naturellement d'une colonne à l'autre. Ce n'est pas un système de grille.
+                </p>
+                <h4>Le problème</h4>
+                <p>
+                    Le système <code>columns</code> ne permet pas de faire "span" un élément sur plusieurs colonnes de
+                    la même manière que Grid. C'est une limitation du CSS multi-column layout lui-même, pas de Tailwind.
+                </p>
+            </article>
+        </section>
+        <h2 class="text-2xl font-bold">Utiliser les grilles</h2>
+        <section class="py-2 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-1">
+            <article class="rounded-sm p-2 border border-gray-900">
+                <h3 class="font-bold">La classe générale grid</h3>
+                <p>
+                    On applique la classe générale <code>grid</code> à l'élément qui va contenir les éléments de la
+                    grille, ensuite il faut configurer le nombre de colonnes à l'intérieur, en commençant par
+                    l'affichage smartphone et en remontant jusqu'aux écrans larges et plus.
+                </p>
+                <code>
+                    &lt;section class="py-2 <mark>grid</mark>"&gt;
+                </code>
+            </article>
+            <article class="rounded-sm p-2 border border-gray-900">
+                <h3 class="font-bold">La classe grid-cols</h3>
+                <p>
+                    On applique la classe <code>grid-cols</code> à l'élément qui va contenir les éléments de la grille,
+                    pour configurer le nombre de colonnes souhaitées dans l'élément selon les différents points de
+                    ruptures.
+                </p>
+                <code>
+                    &lt;section class="py-2 grid <mark>grid-cols-1 lg:grid-cols-2 xl:grid-cols-3</mark>"&gt;
+                </code>
+            </article>
+            <article class="lg:col-span-2 xl:col-span-1 rounded-sm p-2 border border-gray-900">
+                <h3 class="font-bold">La classe gap<i>-&lt;nombre&gt;</i></h3>
+                <p>
+                    On applique la classe <code>gap<i>-&lt;nombre&gt;</i></code> à l'élément qui va contenir les
+                    éléments de la grille, selon la valeur ajoutée, on jouera sur l'espace entre et au-dessus/en-dessous
+                    des éléments à l'intérieur.
+                </p>
+                <code>
+                    &lt;section class="py-2 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 <mark>gap-1</mark>"&gt;
+                </code>
+            </article>
+            <article class="col-span-1 lg:col-span-2 xl:col-span-3 rounded-sm p-2 border border-gray-900">
+                <h3 class="font-bold">La classe col-span</h3>
+                <p>
+                    Pour qu'un élément prenne x colonnes de large, il faut ajouter à cet élément une classe
+                    <code>col-span-x</code>, où <i>x</i> est le nombre de colonnes.
+                </p>
+                <p>
+                    L'article précédent récupère les classes suivantes :
+                </p>
+                <code>
+                    &lt;article class="<mark>lg:col-span-2 xl:col-span-1</mark> rounded-sm p-2 border border-gray-900"&gt;
+                </code>
+                <p>
+                    Il faut préciser la constrution des colonnes pour que les éléments soient cohérent, surtout qu'une
+                    fois qu'une classe applique un nombre de colonne, tant qu'on ne lui indique pas le contraire, elle
+                    garde cette configuration.
+                </p>
+                <p>
+                    L'article actuel lui possède les classes suivantes :
+                </p>
+                <code>
+                    &lt;article class="<mark>col-span-1 lg:col-span-2 xl:col-span-3</mark> rounded-sm p-2 border border-gray-900"&gt;
+                </code>
+            </article>
+        </section>
+    </main>
+    <footer class="bg-gray-900 text-gray-50 py-3">
+        <div class="container px-2 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 my-1">
+            <div class="p-3 border border-gray-50">
+                <b>Liens 1</b>
+                <ul>
+                    <li><a href="#">Lien</a></li>
+                    <li><a href="#">Lien</a></li>
+                    <li><a href="#">Lien</a></li>
+                    <li><a href="#">Lien</a></li>
+                    <li><a href="#">Lien</a></li>
+                </ul>
+            </div>
+            <div class="p-3 border border-gray-50">
+                <b>Liens 2</b>
+                <ul>
+                    <li><a href="#">Lien</a></li>
+                    <li><a href="#">Lien</a></li>
+                    <li><a href="#">Lien</a></li>
+                    <li><a href="#">Lien</a></li>
+                    <li><a href="#">Lien</a></li>
+                </ul>
+            </div>
+            <div class="p-3 border border-gray-50 md:col-span-2 lg:col-span-1">
+                <b>Liens 3</b>
+                <ul>
+                    <li><a href="#">Lien</a></li>
+                    <li><a href="#">Lien</a></li>
+                    <li><a href="#">Lien</a></li>
+                    <li><a href="#">Lien</a></li>
+                    <li><a href="#">Lien</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
